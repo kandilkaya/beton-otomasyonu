@@ -129,15 +129,15 @@
 
     <div class="result-box">
         <div class="result-title">TOPLAM FİYAT (NAKLİYELİ)</div>
-        <div class="total-price" id="toplamFiyat">0.00 TL</div>
+        <div class="total-price" id="toplamFiyat">0.0 TL</div>
         <div class="divider"></div>
         <div class="detail-row">
             <span>Fabrika m³ Birim Fiyatı:</span>
-            <span id="fabrikaFiyat">0.00 TL</span>
+            <span id="fabrikaFiyat">0.0 TL</span>
         </div>
         <div class="detail-row">
             <span>Güncel Nakliye Farkı (m³):</span>
-            <span id="nakliyeFiyat">0.00 TL</span>
+            <span id="nakliyeFiyat">0.0 TL</span>
         </div>
     </div>
 </div>
@@ -155,7 +155,7 @@
         "C30/37": { fabrika: 2680, zonlar: [3465, 3560, 3655, 3750, 3845, 3930, 4025, 4120, 4215, 4310, 4470, 4800] },
         "C30/37 BRÜT": { fabrika: 2734, zonlar: [3519, 3614, 3709, 3804, 3899, 3984, 4079, 4174, 4269, 4364, 4524, 4854] },
         "C35/45": { fabrika: 2896, zonlar: [3681, 3776, 3871, 3966, 4061, 4146, 4241, 4336, 4431, 4526, 4686, 5016] },
-        "C35/45 BRÜT": { fabrika: 2992, zonlar: [3777, 3872, 3967, 4062, 4157, 4242, 4337, 4432, 4427, 4622, 4782, 5112] },
+        "C35/45 BRÜT": { fabrika: 2992, zonlar: [3777, 3872, 3967, 4062, 4157, 4242, 4337, 4432, 4527, 4622, 4782, 5112] },
         "C40/50": { fabrika: 3124, zonlar: [3909, 4004, 4099, 4194, 4289, 4374, 4469, 4564, 4659, 4754, 4914, 5244] },
         "C40/ 50 BRÜT": { fabrika: 3202, zonlar: [3987, 4082, 4177, 4272, 4367, 4452, 4547, 4642, 4737, 4832, 4992, 5322] },
         "C20 SAHA": { fabrika: 2434, zonlar: [3219, 3314, 3409, 3504, 3599, 3684, 3779, 3874, 3969, 4064, 4224, 4554] },
@@ -193,9 +193,9 @@
         let guncelMazot = parseFloat(document.getElementById('mazotFiyati').value);
 
         if (!secilenBeton || secilenZonIndex === "" || isNaN(miktar) || miktar <= 0 || isNaN(guncelMazot) || guncelMazot <= 0) {
-            document.getElementById('fabrikaFiyat').textContent = "0.00 TL";
-            document.getElementById('nakliyeFiyat').textContent = "0.00 TL";
-            document.getElementById('toplamFiyat').textContent = "0.00 TL";
+            document.getElementById('fabrikaFiyat').textContent = "0.0 TL";
+            document.getElementById('nakliyeFiyat').textContent = "0.0 TL";
+            document.getElementById('toplamFiyat').textContent = "0.0 TL";
             return;
         }
 
@@ -209,9 +209,12 @@
         const yeniBirimFiyat = fabrikaBirim + guncelNakliyeFarki;
         const toplamTutar = yeniBirimFiyat * miktar;
 
-        document.getElementById('fabrikaFiyat').textContent = fabrikaBirim.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + " TL";
-        document.getElementById('nakliyeFiyat').textContent = guncelNakliyeFarki.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + " TL";
-        document.getElementById('toplamFiyat').textContent = toplamTutar.toLocaleString('tr-TR', { minimumFractionDigits: 2 }) + " TL";
+        // Maksimum 1 ondalık basamak (küsürat) göstermek için ayarlandı
+        const formatAyari = { minimumFractionDigits: 1, maximumFractionDigits: 1 };
+
+        document.getElementById('fabrikaFiyat').textContent = fabrikaBirim.toLocaleString('tr-TR', formatAyari) + " TL";
+        document.getElementById('nakliyeFiyat').textContent = guncelNakliyeFarki.toLocaleString('tr-TR', formatAyari) + " TL";
+        document.getElementById('toplamFiyat').textContent = toplamTutar.toLocaleString('tr-TR', formatAyari) + " TL";
     }
 </script>
 
